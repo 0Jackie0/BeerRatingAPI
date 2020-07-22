@@ -18,6 +18,11 @@ namespace BeerRatingAPI.ActionFilter
      **/
     public class UsernameFilter : Attribute, IAuthorizationFilter
     {
+        /**
+         * This method will check the username in the request body
+         * if username does not follow the correcct format
+         * 406 NotAcceptable server error will be return
+         **/
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             var syncIOFeature = context.HttpContext.Features.Get<IHttpBodyControlFeature>();

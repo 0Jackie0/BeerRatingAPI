@@ -7,6 +7,8 @@ namespace BeerRatingAPI.Domain
 {
     public class Rate
     {
+        public int rateId { get; set; }
+
         //the beer id for the rate
         public int beerId { get; set; }
 

@@ -62,12 +62,9 @@ namespace API_TEST
             {
                 using (var response = (HttpWebResponse)request.GetResponse())
                 {
-                    using (var stream = response.GetResponseStream())
+                    using (var reader = new StreamReader(response.GetResponseStream()))
                     {
-                        using (var sr = new StreamReader(stream))
-                        {
-                            content = sr.ReadToEnd();
-                        }
+                        content = reader.ReadToEnd();
                     }
                 }
 
@@ -113,12 +110,9 @@ namespace API_TEST
             {
                 using (var response = (HttpWebResponse)request.GetResponse())
                 {
-                    using (var stream = response.GetResponseStream())
+                    using (var reader = new StreamReader(response.GetResponseStream()))
                     {
-                        using (var sr = new StreamReader(stream))
-                        {
-                            content = sr.ReadToEnd();
-                        }
+                        content = reader.ReadToEnd();
                     }
                 }
 
@@ -163,12 +157,9 @@ namespace API_TEST
             {
                 using (var response = (HttpWebResponse)request.GetResponse())
                 {
-                    using (var stream = response.GetResponseStream())
+                    using (var reader = new StreamReader(response.GetResponseStream()))
                     {
-                        using (var sr = new StreamReader(stream))
-                        {
-                            content = sr.ReadToEnd();
-                        }
+                        content = reader.ReadToEnd();
                     }
                 }
 

@@ -38,19 +38,16 @@ namespace BeerRatingAPI.Controllers
             //Set up request for validating beer id
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ID_CHECK_URL + $"{id}");
             request.Method = "GET";
-            var content = string.Empty;
 
             try
             {
                 //get beer information
                 using (var response = (HttpWebResponse)request.GetResponse())
                 {
-                    using (var stream = response.GetResponseStream())
+                    var content = string.Empty;
+                    using (var reader = new StreamReader(response.GetResponseStream()))
                     {
-                        using (var sr = new StreamReader(stream))
-                        {
-                            content = sr.ReadToEnd();
-                        }
+                        content = reader.ReadToEnd();
                     }
                 }
             }
@@ -73,8 +70,10 @@ namespace BeerRatingAPI.Controllers
                 }
             }
 
+            int rateValue = Convert.ToInt32(newRate.GetProperty("rating").ToString());
+
             //check rate value
-            if (Convert.ToInt32(newRate.GetProperty("rating").ToString()) < 1 || Convert.ToInt32(newRate.GetProperty("rating").ToString()) > 5)
+            if (rateValue < 1 || rateValue > 5)
             {
                 var respondMessage = new HttpResponseMessage(HttpStatusCode.BadRequest);
                 respondMessage.Content = new StringContent("Rating must be with in 1 -- 5");
@@ -87,7 +86,7 @@ namespace BeerRatingAPI.Controllers
             newRateObj.beerId = id;
             newRateObj.userName = newRate.GetProperty("username").ToString();
             newRateObj.comment = newRate.GetProperty("comment").ToString();
-            newRateObj.rating = Convert.ToInt32(newRate.GetProperty("rating").ToString());
+            newRateObj.rating = rateValue;
 
             //saving json format data to datafile
             using (StreamWriter writer = System.IO.File.AppendText(DATA_FILE_PATH))
@@ -95,7 +94,6 @@ namespace BeerRatingAPI.Controllers
                 //convet domain object in to json format string and add ","at the end for easy reading
                 writer.WriteLine(new JavaScriptSerializer().Serialize(newRateObj) + ",");
             }
-
 
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
@@ -120,12 +118,9 @@ namespace BeerRatingAPI.Controllers
                 //get search result of beer name
                 using (var response = (HttpWebResponse)request.GetResponse())
                 {
-                    using (var stream = response.GetResponseStream())
+                    using (var reader = new StreamReader(response.GetResponseStream()))
                     {
-                        using (var sr = new StreamReader(stream))
-                        {
-                            content = sr.ReadToEnd();
-                        }
+                        content = reader.ReadToEnd();
                     }
                 }
             }
@@ -178,14 +173,12 @@ namespace BeerRatingAPI.Controllers
             {
                 //for each search result will be a json object in the final json array
                 JObject newRateResult = new JObject();
-                int targetId = Convert.ToInt32(beer.GetValue("id").ToString());
-                String targetName = beer.GetValue("name").ToString();
-                String targetDescription = beer.GetValue("description").ToString();
+                int targetId = Convert.ToInt32((string)beer["id"]);
 
                 //add beer info to the json object
                 newRateResult.Add(new JProperty("id", targetId));
-                newRateResult.Add(new JProperty("name", targetName));
-                newRateResult.Add(new JProperty("description", targetDescription));
+                newRateResult.Add(new JProperty("name", (string)beer["name"]));
+                newRateResult.Add(new JProperty("description", (string)beer["description"]));
 
 
                 //create empty json array to contain the rating info for this beer
@@ -200,9 +193,9 @@ namespace BeerRatingAPI.Controllers
                     JObject temp = new JObject();
 
                     //add rate info in to json object
-                    temp.Add(new JProperty("username", eachRate.GetValue("userName").ToString()));
-                    temp.Add(new JProperty("rating", eachRate.GetValue("rating").ToString()));
-                    temp.Add(new JProperty("comments", eachRate.GetValue("comment").ToString()));
+                    temp.Add(new JProperty("username", (string)eachRate["userName"]));
+                    temp.Add(new JProperty("rating", (int)eachRate["rating"]));
+                    temp.Add(new JProperty("comments", (string)eachRate["comment"]));
 
                     //add json object in to "userRatings" json array
                     userRatingList.Add(temp);
