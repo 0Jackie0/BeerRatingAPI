@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "r2S5TK2P49/3owcF8Ox00H75O9TFTy0BjnebFMwyWY3PUk700Gf7vQeD8BaY4Rz4KIrIWE36EMMLkUSEaOsz4g==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\l1290\\Desktop\\Work\\.net Workspace\\Unit tests\\API TEST\\API TEST.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\l1290\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

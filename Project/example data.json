@@ -1,0 +1,38 @@
+[
+    {
+        "id":"1",
+        "name":"Buzz",
+        "description":"A light, crisp and bitter IPA brewed with English and American hops. A small batch brewed only once.",
+        "userRatings":
+        [
+            {
+                "username":"john.doe@fictitious.com",
+                "rating":3,
+                "comments":"Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+            },
+            {
+                "username":"max.power&#64;fictitious.com",
+                "rating":5,
+                "comments":"sed do eiusmod tempor incididunt ut labore"
+            }
+        ]
+    },
+    {
+        "id":"2",
+        "name":"Pule",
+        "description":"A light, crisp and bitter IPA brewed with English and American hops. A small batch brewed only once.",
+        "userRatings":
+        [
+            {
+                "username":"john.doe@fictitious.com",
+                "rating":3,
+                "comments":"Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+            },
+            {
+                "username":"max.power&#64;fictitious.com",
+                "rating":5,
+                "comments":"sed do eiusmod tempor incididunt ut labore"
+            }
+        ]
+    }
+]
